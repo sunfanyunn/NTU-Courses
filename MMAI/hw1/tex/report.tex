@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{hyperref}
+%provides multi-line comment syntax : \begin{comment} \end{comment}
+
+
+\begin{document}
+\title{Multimedia HW1}
+\author{B04902045 孫凡耘}
+\date{\today}
+\maketitle
+
+
+\section{Results}
+
+\begin{center} \begin{tabular}{||c c c c c c||}
+ \hline
+   & Color & Texture & Fusion & RP(25\%) & RP(50\%) \\ [0.5ex]
+ \hline\hline
+aloe\_vera\_gel & 0.204 & 0.080 & 0.200 & 0.073 & 0.084\\
+\hline
+baby\_shoes & 0.329 & 0.168 & 0.336 & 0.179 & 0.182\\
+\hline
+bicycle & 0.199 & 0.143 & 0.206 & 0.164 & 0.165\\
+\hline
+bottle & 0.300 & 0.165 & 0.300 & 0.139 & 0.140\\
+\hline
+bracelet & 0.208 & 0.238 & 0.230 & 0.095 & 0.095\\
+\hline
+cartoon\_purse & 0.197 & 0.086 & 0.197 & 0.136 & 0.143\\
+\hline
+chair & 0.110 & 0.120 & 0.114 & 0.089 & 0.103\\
+\hline
+children\_dress & 0.364 & 0.152 & 0.362 & 0.221 & 0.269\\
+\hline
+cup & 0.342 & 0.194 & 0.349 & 0.266 & 0.279\\
+\hline
+drum & 0.227 & 0.090 & 0.206 & 0.115 & 0.124\\
+\hline
+garment & 0.418 & 0.375 & 0.423 & 0.399 & 0.380\\
+\hline
+gge\_snack & 0.339 & 0.238 & 0.359 & 0.159 & 0.170\\
+\hline
+glasses & 0.120 & 0.183 & 0.123 & 0.101 & 0.104\\
+\hline
+hand\_cream & 0.270 & 0.101 & 0.269 & 0.179 & 0.198\\
+\hline
+korean\_snack & 0.447 & 0.094 & 0.444 & 0.201 & 0.207\\
+\hline
+leather\_purse & 0.102 & 0.083 & 0.105 & 0.070 & 0.068\\
+\hline
+men\_clothes & 0.332 & 0.116 & 0.329 & 0.218 & 0.221\\
+\hline
+minnie\_dress & 0.530 & 0.239 & 0.539 & 0.213 & 0.213\\
+\hline
+minnie\_shoes & 0.187 & 0.098 & 0.188 & 0.130 & 0.127\\
+\hline
+nba\_jersey & 0.063 & 0.131 & 0.071 & 0.057 & 0.056\\
+\hline
+Mean MAP & 0.262 & 0.148 & 0.264 & 0.156 & 0.162\\
+\hline
+
+\end{tabular}
+\end{center}
+
+\subsection{Coding environment and Packages Used}
+
+Ubuntu 16.04, Python 3.5.2
+
+\begin{itemize}
+\item opencv-python (3.3.0.10)
+\item Pillow (4.3.0)
+\end{itemize}
+
+Note that I uploaded other pdfs for visualization results.
+
+
+
+\subsection{Texture}
+\subsubsection{}
+\begin{itemize}
+  \item \textbf{Gabor texture}
+  \item Fourier features
+  \item Co-occurrence matrix metrics
+  \item Tamura's texture
+  \item e.t.c
+\end{itemize}
+
+\subsubsection{Implementation}
+\begin{enumerate}[{Step}~1:]
+
+\item Apply gabor filters to every image and calculate mean and variance for each channel(rgb).
+Texture feature's dimension will be 6(kernel size) x 16(orientation) x 2(mean and variance) x 3(rgb).
+
+\item Normalize every dimension of database feature vector.
+
+\item Compute difference by L1 difference
+\end{enumerate}
+
+\subsection{Color}
+
+\subsubsection{}
+\begin{itemize}
+  \item \textbf{Global color histogram}
+  \item Regional color hisogram
+  \item Grid color moments
+  \item Means in each color channel
+  \item Color (auto-) correlogram
+  \item e.t.c
+\end{itemize}
+
+\subsubsection{Implementation}
+\begin{enumerate}[{Step}~1:]
+
+\item Tranform rgb images to HSV space.
+
+\item Quantize them to 288 levels (18 hue * 4 saturation * 4 value).
+
+\item Count the global color histogram and normalize(since pictures differ in size).
+The normalization here simply means to divide histogram results by the sum of all bars in an image.
+
+\item Compute distance by L1 difference
+\end{enumerate}
+
+\subsection{fusion}
+
+\subsubsection{Implementation}
+\begin{enumerate}[{Step}~1:]
+\item Construct color and texture features.
+\item Compute l1 distance separately and normalize both of them.
+\item combine them with the weight: 0.9(color), 0.1(texture) and retrieve.
+\end{enumerate}
+
+\subsection{random projection}
+
+\subsubsection{Implementation}
+\begin{enumerate}
+\item Perform random projection on color feature(the projection matrix is sampled from a standard normal distribution)
+\item Retrieve by L1 distance
+\end{enumerate}
+
+\section{Discussion}
+\begin{itemize}
+    \item Performing dimension-wise normalization has a negative effect for color features but a positive effect on texture features.
+      The reason to perform dimension-wise normalization is that we want to ensure that all dimensions have the same scale, otherwise certain dimension may dominate the retrieval results. The reason that it doesn't work on hsv is probably because the \emph{hue} dimension(range [0, 360)) is more important than \emph{saturation}(range [0,1]) and \emph{value}(range [0,1]), but performing dimension-wise normalization eliminate this inequality.
+
+    \item Calculating the result of gabor filters on different channels(rgb) can yield better results(instead of calculating a single mean and variance for a image(after filter is applied) of size [w, h, 3]). But it triples the dimension of the feature vector though, so it can be seen as a trade-off between performance and computation load.
+
+    \item Random projection seems to lower the MAP pretty much, but it decreases the dimension of the feature vector. Similarly, applying random projection can be seen as a trade-off between performance and computation load. Performance drops dramatically when using hashed features with 50\% of the original feature dimensions, but only drops a little(compared to rp50) when I decrease the dimension to 25\% of the original feature dimension.
+
+    \item I also tried to apply a circular shift for gabor features mentioned in \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.63.8420&rep=rep1&type=pdf}. It doesn't seem to enhance the performance in our case.
+
+\end{itemize}
+
+\end{document}
