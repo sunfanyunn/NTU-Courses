@@ -12,3 +12,5 @@ height="200">
 - `Digital signal processing (DSP)`
 - `Computer Networks (CN)`
 - `Multimedia Analysis and Indexing (MMAI)`
+- `Operating System (OS)`
+- `System Programming (SP)`
