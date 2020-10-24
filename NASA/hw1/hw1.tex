@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage{titlesec}
+\usepackage{verbatim}
+%provides multi-line comment syntax : \begin{comment} \end{comment}
+
+\begin{comment}
+\titleformat{\section}[runin]
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\end{comment}
+
+
+
+\title{NASA hw1}
+\author{B04902045 孫凡耘}
+\date{\today}
+
+\begin{document}
+
+\maketitle{
+
+    \section{SA}
+    \subsection{Part 1}
+        \subsubsection*{(a)}
+        Filter used : telnet \&\& ip.src == 192.168.137.66 (my local ip)\newline
+        Extract only the data part:\newline
+        LesMiserable\textbackslash r\newline
+        SECRET\textbackslash r\textbackslash r\newline
+        sGossiping\textbackslash r\textbackslash r\newline
+        \textbackslash357\textbackslash277\textbackslash275o \newline
+        p \newline
+        \textbackslash357\textbackslash277\textbackslash275\textbackslash357\textbackslash277\textbackslash275\textbackslash r\newline
+        \subsubsection*{(b)}
+        Application Layer : telnet\newline
+        Transmission Layer : TCP
+        \subsubsection*{(c)}
+        LesMiserable's Computer : Application Layer\newline
+        $\Downarrow$\newline
+        Switch : Link Layer\newline
+        $\Downarrow$\newline
+        Router : Network Layer\newline
+        $\Downarrow$\newline
+        Server : Application Layer\newline
+        P.S. Actually goes down to Physical Layer for the whole connection process.
+
+
+    \subsection{Part 2}
+        \titleformat{\subsubsection}[runin]
+          {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+        \subsubsection*{(a)}
+        DHCP should belong to Application Layer.DHCP belongs in layer 7 because it's an application in and of itself.  It uses lower layers for various functions, ie discovery happens at layer 2 or 3 (relaying) but DHCP does much more than discovery.  For example, it talks to DNS servers via DDNS updates as part of the standard.  The entire "managing of IP addresses" is an application level function.
+        \subsubsection*{(b)}
+        1. Contact ISP to see if they offer IPv6. Apply for an IPv6 IP.\newline
+        2. Configure or assert that router that you are using do support IPv6(if needed)\newline
+        3. Add an IPv6 interface to NIC(if needed).\newline
+        4. Configure or assert that the DNS server that you are using do support IPv6(if needed)\newline
+        5. If we can't meet certain necessary condition to connect to IPv6 host properly, we can do a tunneling instead( for Ubuntu, we can install Miredo ). \newline
+        P.S. Some OS may do the above procedure automatically
+        \subsubsection*{(c)}
+        Message:Governments of the Industrial World, you weary giants of flesh and steel, I come from Cyberspace, the new home of Mind. On behalf of the future, I ask you of the past to leave us alone. You are not welcome among us. You have no sovereignty where we gather. -from "A Declaration of the Independence of Cyberspace"
+        \newline Connected Time: 3/7, 00:29
+\end{document}

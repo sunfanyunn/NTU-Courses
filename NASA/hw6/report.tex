@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+%\usepackage[xetex]{graphicx}
+
+\usepackage{titlesec}
+\usepackage{verbatim}
+%provides multi-line comment syntax : \begin{comment} \end{comment}
+%provides href/url
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+
+\begin{comment}
+\titleformat{\section}[runin]
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\end{comment}
+
+
+\title{NASA hw6}
+\author{B04902045 孫凡耘}
+\date{\today}
+
+\begin{document}
+\maketitle
+    \section{Network Administration}
+    \subsection{1}
+    NAT是一種技術，讓封包在通過有NAT功能的router或firewall時，更改他的source ip or destination ip.最常是用在可以讓很多臺電腦再只有一個public IP時還是都能上網。
+    \subsection{2}
+    Advantages
+\begin{itemize}
+\item NAT conserves public Internet address space.
+\item NAT enhances security.(hacker更難攻擊private network)
+\item NAT simplifies routing. NAT reduces the need to implement more complicated routing schemes within larger local networks.
+\item NAT is seamless. Standard client/server network services work without modification through a NAT-enabled device.
+\item NAT facilitates network migration from one address space to another.(if public ip changes，private network不用重新設定）
+\end{itemize}
+Disadvantages
+\begin{itemize}
+\item When hosts inside your network makes a request to a remote site, the remote site will see the connection as it’s coming from your NAT router. Some hosts implement a level of security regarding how many connections to accept from another host and they do not respond if the defined number of requests has been reached. This can degrade the performance of your network.
+\item Because many applications and protocols depend on end-to-end functionality, your network may not be able to use some of them. As we already told you, hosts inside a NAT network are not reachable by hosts in other networks.
+\item End-to-end IP traceability is also lost. If you need to troubleshoot your network from a remote site, you will find troubleshooting more difficult and sometimes even impossible.
+\item Using tunneling protocols, such as IPsec, can also be a more complicated because NAT modifies values in the headers that interfere with integrity checks done by IPsec and other tunneling protocols. However, newer routers have special features to support tunneling protocols.
+\end{itemize}
+
+    \subsection{3}
+    Dynamic DNS (DDNS or DynDNS) is a method of automatically updating a name server in the Domain Name System (DNS), often in real time, with the active DDNS configuration of its configured hostnames, addresses or other information. In order to achieve that, TTL must be small to prevent users from keeping old addresses in their cache. Futhermore, we have to ensure that every users access the server through Name Server every time.
+    In short: I can use NO-IP's service
+    \subsection{4}
+\begin{verbatim}
+Assume I have openssh-server on my local machine
+Set up reverse SSH tunnel on my home server
+$ ssh -NfR 10080:localhost:80 141.59.2.6
+Connect to my home server's HTTP service  on my local machine
+by opening the browser at localhost:10080
+\end{verbatim}
+    \subsection{5}
+1.
+\begin{verbatim}
+position  source ip  destination ip
+C         8.8.8.8    1.2.3.4
+G         8.8.8.8    1.2.3.4
+G         10.2.0.2   10.2.0.1
+B         10.2.0.2   10.2.0.1
+\end{verbatim}
+2.
+\begin{verbatim}
+position  source ip  destination ip
+A         10.1.0.1   1.2.3.4
+G         10.1.0.1   1.2.3.4
+G         10.1.0.1   10.2.0.1
+G         10.2.0.3   10.2.0.1
+B         10.2.0.3   10.2.0.1
+\end{verbatim}
+
+\end{document}

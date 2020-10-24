@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{titlesec}
+\usepackage{verbatim}
+%provides multi-line comment syntax : \begin{comment} \end{comment}
+%provides href/url
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{xeCJK}
+\usepackage[xetex]{graphicx}
+\providecommand{\tightlist}{
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\begin{comment}
+\titleformat{\section}[runin]
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\end{comment}
+
+
+\title{NASA hw5}
+\author{B04902045 孫凡耘}
+\date{\today}
+
+\begin{document}
+\maketitle
+    \section{System Administration}
+    \subsection{1}
+    yum upgrade forces the removal of obsolete packages, while yum update may or may not also do this. The removal of obsolete packages can be risky, as it may remove packages that you use. \newline
+    \subsection{2}
+    yum upgrade is the same as the update command with the --obsoletes flag set.
+    \subsection{3}
+    yum remove will remove only that package and not all the dependencies.\newline
+    yum autoremove will remove unneeded dependencies from that installed package.
+    \subsection{4}
+    If you don't want packages to be deleted, as they were installed as dependency before, you must mark them as installed:
+    \begin{verbatim}$ yum install #package\end{verbatim}
+    \subsection{5}
+    \begin{verbatim}$ yum search vim \end{verbatim}
+    \subsection{6}
+    \begin{verbatim}$ yum provides nfsstat\end{verbatim}
+    \subsection{7}
+    \begin{verbatim}$ repoquery --tree-requires <My-Package>\end{verbatim}
+    \subsection{8}
+    PyPI \newline
+    pros: convenience, 可以安裝很多人contriute的repository(PyPI is a third-party software repositories)\newline
+    cons: security issue, PyPI does not prevent people from uploading malware.\newline\newline
+    CentOS 7 repository\newline
+    pros: 官方的repo對security有把關, 像第10題, 如果缺少不同程式語言的dependency(ex: gcc), yum install 可以下參數幫你一起裝起來但pip不能\newline
+    cons: 官方的repo資源比較少，可能也找不到最新的版本之類的(造成類似第10題的version conflict)
+    \subsection{9}
+    The command
+    \begin{verbatim}$ sudo yum remove -y python-jinja2\end{verbatim}
+    yields a lot of error messages, basically saying file or directory not found(也就是已經被移除了找不到)\newline
+    The reason of this is that jinja2 is uninstalled by pip previously.
+    \subsection{10}
+    View next page
+
+
+\end{document}

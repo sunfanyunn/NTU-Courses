@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{titlesec}
+\usepackage{verbatim}
+%provides multi-line comment syntax : \begin{comment} \end{comment}
+%provides href/url
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{xeCJK}
+\usepackage[xetex]{graphicx}
+\providecommand{\tightlist}{
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\begin{comment}
+\titleformat{\section}[runin]
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[runin]
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\end{comment}
+
+
+\title{NASA hw5}
+\author{B04902045 孫凡耘}
+\date{\today}
+
+\begin{document}
+\maketitle
+    \section{Network Administration}
+    \subsection{DHCP}
+    DHCP Snooping is an option to prevent rogue DHCP servers on the Lan segment.DHCP snooping can ensure IP integrity on a Layer 2 switched domain. It works with information from a DHCP server to:
+\begin{itemize}
+\tightlist
+\item
+    Track the physical location of hosts.
+\item
+    Ensure that hosts only use the IP addresses assigned to them.
+\item
+    Ensure that only authorized DHCP servers are accessible.(*)
+\end{itemize}
+Commands(example):
+\begin{verbatim}
+configure dhcp snooping on your vlan
+$ Ip dhcp snooping
+$ Ip dhcp snooping vlan 1
+for trusted servers
+$ Int fa2/10
+$ Ip dhcp snooping trust
+\end{verbatim}
+    \subsection{DNS}
+    \subsubsection{1}
+    No computer will query your computer cause they are not set to query the dns server(Unless they change the configuration manually). Usually, the default is set to well-known DNS servers such as Google public dns or openDNS.
+    \subsubsection{2}
+    Domain:\begin{verbatim}in-addr.arpa\end{verbatim}
+    When DNS is used to find something on the internet, it always starts at the least specific(後面開始看).
+    So in names, the least specific part comes last, but in IP addresses, it comes first，所以要revert ip addresses.
+    \subsubsection{3}
+    Whois lookup:\newline
+    webpage tool: \url{http://whois.domaintools.com/icann.org}\newline
+    Email: domain-admin@icann.org
+    \subsubsection{4}
+    When you update the nameservers for a domain, it may take up to 24-72 hours for the change to take effect. This period is called DNS propagation.
+
+    In other words, it is a period of time ISP (Internet service provider) nodes across the world take to update their caches with the new DNS information of your domain.
+
+    Due to DNS caches of different levels, after the nameservers change, some of your visitors might still be directed to your old server for some time, whereas others can see the website from the new server shortly after the change.\newline
+    reference: \url{https://www.namecheap.com/support/knowledgebase/article.aspx/9622/10/dns-propagation--explained}
+
+    A zone file is a sequence of entries for resource records. Each line is a text description that defines a single resource record (RR). The description consists of several fields separated by white space (spaces or tabs) as follows:
+\begin{verbatim} name    ttl     record class    record type     record data\end{verbatim}
+When a caching (recursive) nameserver queries the authoritative nameserver for a resource record, it will cache that record for the time (in seconds) specified by the TTL.\newline
+    3600 ==> 1 hour
+    \subsubsection{5}
+	An "open DNS resolver" is a DNS server that's willing to resolve recursive DNS lookups for anyone on the internet.\newline
+	\textbf{What problem may is pose ?}\newline
+	Short answer: attacker can make use of the open DNS resolver to perform a DDos attack.\newline
+	The way this attack works is pretty simple - because your server will resolve recursive DNS queries from anyone, an attacker can cause it to participate in a DDoS by sending your server a recursive DNS query that will return a large amount of data, much larger than the original DNS request packet. By spoofing (faking) their IP address, they'll direct this extra traffic to their victim's computers instead of their own, and of course, they'll make as many requests as fast as they can to your server, and any other open DNS resolvers they can find. In this manner, someone with a relatively small pipe can "amplify" a denial of service attack by using all the bandwidth on their pipe to direct a much larger volume of traffic at their victims.
+	reference: \url{https://serverfault.com/questions/573465/what-is-an-open-dns-resolver-and-how-can-i-protect-my-server-from-being-misused}
+\end{document}
