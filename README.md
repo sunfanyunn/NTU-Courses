@@ -7,6 +7,8 @@ height="200">
 
 </div>
 
+Courses
+
 - `Computer Architecture (CA)` 
 - `Data Strcutures and Algorithms (DSA)`
 - `Digital signal processing (DSP)`
