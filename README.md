@@ -16,3 +16,5 @@ Courses
 - `Multimedia Analysis and Indexing (MMAI)`
 - `Operating System (OS)`
 - `System Programming (SP)`
+- `Network Administration/System Administration Training (NASA)`
+- `Intro HCI & Design (HCI)`

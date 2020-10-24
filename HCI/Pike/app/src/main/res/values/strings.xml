@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">PIKE</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_sidebar">sidebar</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+
+    <string-array name="array_places">
+        <item>Student Activity Center</item>
+        <item>Women First Dorm</item>
+    </string-array>
+    <string name="title_activity_custom_info_window_adapter">CustomInfoWindowAdapter</string>
+
+</resources>
