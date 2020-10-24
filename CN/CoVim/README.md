@@ -6,7 +6,7 @@ TCP Hole Punching(http://www.brynosaurus.com/pub/net/p2pnat/) is used to bypass 
 
 UNDER DEVELOPEMENT
 
-<img src="/doc/covim.gif?raw=true">
+<img src="./doc/covim.gif?raw=true">
 
 
 ## Features
